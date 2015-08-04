@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Leak test</h1>
+    <script>
+      for (var i=0; i < 1000; i++) {
+        var iframe = document.createElement('iframe');
+        iframe.src = "index_iframe.html";
+        iframe.addEventListener('load', function foo(e) {
+          e.target.removeEventListener(e.type, foo);
+          document.body.removeChild(e.target);
+        });
+        document.body.appendChild(iframe);
+      }
+    </script>
+  </body>
+</html>
